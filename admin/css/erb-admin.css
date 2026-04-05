@@ -238,3 +238,79 @@
     min-width: 200px;
     text-align: center;
 }
+
+/* ── Pagination ──────────────────────────────────────────────────────────── */
+.erb-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.erb-pager__info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: .875rem;
+    color: var(--erb-neutral);
+}
+.erb-pager__sizes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: .875rem;
+}
+.erb-pager__size {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 28px;
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius-sm);
+    color: var(--erb-neutral);
+    text-decoration: none;
+    font-size: .8rem;
+    transition: all .15s;
+}
+.erb-pager__size:hover,
+.erb-pager__size--active {
+    background: var(--erb-navy);
+    border-color: var(--erb-navy);
+    color: #fff;
+}
+.erb-pager__pages {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.erb-pager__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius-sm);
+    color: var(--erb-dark);
+    text-decoration: none;
+    font-size: .8rem;
+    transition: all .15s;
+}
+.erb-pager__btn:hover {
+    background: var(--erb-light);
+    border-color: var(--erb-neutral);
+}
+.erb-pager__btn--active {
+    background: var(--erb-navy);
+    border-color: var(--erb-navy);
+    color: #fff;
+    font-weight: 600;
+}
+.erb-pager__ellipsis {
+    padding: 0 4px;
+    color: var(--erb-neutral);
+    font-size: .8rem;
+}

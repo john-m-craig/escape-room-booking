@@ -3,9 +3,26 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 global $wpdb;
-$search = sanitize_text_field( wp_unslash( $_GET['s'] ?? '' ) );
+$search      = sanitize_text_field( wp_unslash( $_GET['s'] ?? '' ) );
+$per_page    = (int) ( $_GET['per_page'] ?? ERB_Pagination::DEFAULT_PER_PAGE );
+$paged       = max( 1, (int) ( $_GET['paged'] ?? 1 ) );
 $t_customers = $wpdb->prefix . 'erb_customers';
 $t_bookings  = $wpdb->prefix . 'erb_bookings';
+
+// Count total
+if ( $search ) {
+    $s     = '%' . $wpdb->esc_like( $search ) . '%';
+    $total = (int) $wpdb->get_var( $wpdb->prepare(
+        "SELECT COUNT(*) FROM {$t_customers} c WHERE (c.email LIKE %s OR c.last_name LIKE %s OR c.first_name LIKE %s)",
+        $s, $s, $s
+    ) );
+} else {
+    $total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$t_customers}" );
+}
+
+$pager  = new ERB_Pagination( $total, $per_page, $paged );
+$offset = $pager->get_offset();
+$limit  = $pager->get_per_page();
 
 if ( $search ) {
     $s         = '%' . $wpdb->esc_like( $search ) . '%';
@@ -15,18 +32,19 @@ if ( $search ) {
          FROM {$t_customers} c
          LEFT JOIN {$t_bookings} b ON b.customer_id = c.id
          WHERE (c.email LIKE %s OR c.last_name LIKE %s OR c.first_name LIKE %s)
-         GROUP BY c.id ORDER BY c.created_at DESC LIMIT 200",
-        $s, $s, $s
+         GROUP BY c.id ORDER BY c.created_at DESC LIMIT %d OFFSET %d",
+        $s, $s, $s, $limit, $offset
     ) );
 } else {
-    $customers = $wpdb->get_results(
+    $customers = $wpdb->get_results( $wpdb->prepare(
         "SELECT c.*, COUNT(b.id) AS booking_count,
                 SUM(CASE WHEN b.status='confirmed' THEN b.total_pence ELSE 0 END) AS total_spent
          FROM {$t_customers} c
          LEFT JOIN {$t_bookings} b ON b.customer_id = c.id
          WHERE 1=1
-         GROUP BY c.id ORDER BY c.created_at DESC LIMIT 200"
-    );
+         GROUP BY c.id ORDER BY c.created_at DESC LIMIT %d OFFSET %d",
+        $limit, $offset
+    ) );
 }
 ?>
 <div class="wrap erb-admin-page">
@@ -55,7 +73,7 @@ if ( $search ) {
     <div class="erb-card">
         <h2><?php
         /* translators: %d: number of customers */
-        printf( esc_html__( '%d customer(s)', 'escape-room-booking' ), count( $customers ) ); ?></h2>
+        printf( esc_html__( '%d customer(s)', 'escape-room-booking' ), $total ); ?></h2>
 
         <?php if ( empty( $customers ) ) : ?>
             <p><em><?php esc_html_e( 'No customers found.', 'escape-room-booking' ); ?></em></p>

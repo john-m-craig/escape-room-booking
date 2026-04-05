@@ -23,6 +23,7 @@ class ERB_Loader {
         // Helpers & utilities
         require_once ERB_PLUGIN_DIR . 'includes/class-erb-helpers.php';
         require_once ERB_PLUGIN_DIR . 'includes/class-erb-db.php';
+require_once ERB_PLUGIN_DIR . 'includes/class-erb-pagination.php';
 
         // Core domain classes
         require_once ERB_PLUGIN_DIR . 'includes/class-erb-games.php';

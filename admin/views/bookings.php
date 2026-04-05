@@ -78,7 +78,7 @@
         <h2>
             <?php
             /* translators: %d: number of bookings */
-            printf( esc_html__( '%d booking(s)', 'escape-room-booking' ), count( $bookings ) ); ?>
+            printf( esc_html__( '%d booking(s)', 'escape-room-booking' ), $total ); ?>
             <?php if ( $total_revenue ) : ?>
             <span style="font-size:.85rem;font-weight:400;color:#6b7280;margin-left:.75rem;">
                 <?php esc_html_e( 'Confirmed revenue:', 'escape-room-booking' ); ?>

@@ -182,9 +182,8 @@ class ERB_DB {
         $db = self::db();
         return $db->get_results( $db->prepare(
             "SELECT * FROM " . self::table('blocked_slots') . "
-             WHERE game_id = %d AND slot_start < %s
-AND slot_end > %s",
-$game_id, $date_to, $date_from
+             WHERE game_id = %d AND slot_start >= %s AND slot_start <= %s",
+            $game_id, $date_from, $date_to
         ) );
     }
 
@@ -265,6 +264,56 @@ $game_id, $date_to, $date_from
         // phpcs:enable
     }
 
+    public static function count_bookings( $args = array() ) {
+        $db      = self::db();
+        $where   = array( '1=1' );
+        $prepare = array();
+
+        if ( ! empty( $args['game_id'] ) ) {
+            $where[]   = 'b.game_id = %d';
+            $prepare[] = $args['game_id'];
+        }
+        if ( ! empty( $args['status'] ) ) {
+            $where[]   = 'b.status = %s';
+            $prepare[] = $args['status'];
+        }
+        if ( ! empty( $args['date_from'] ) ) {
+            $where[]   = 'b.slot_start >= %s';
+            $prepare[] = $args['date_from'];
+        }
+        if ( ! empty( $args['date_to'] ) ) {
+            $where[]   = 'b.slot_start <= %s';
+            $prepare[] = $args['date_to'];
+        }
+        if ( ! empty( $args['search'] ) ) {
+            $where[]   = '(b.booking_ref LIKE %s OR c.email LIKE %s OR c.last_name LIKE %s)';
+            $s         = '%' . $db->esc_like( $args['search'] ) . '%';
+            $prepare[] = $s;
+            $prepare[] = $s;
+            $prepare[] = $s;
+        }
+
+        $where_sql   = implode( ' AND ', $where );
+        $t_bookings  = self::table('bookings');
+        $t_customers = self::table('customers');
+
+        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+        if ( ! empty( $prepare ) ) {
+            return (int) $db->get_var( $db->prepare(
+                "SELECT COUNT(*) FROM {$t_bookings} b
+                 LEFT JOIN {$t_customers} c ON c.id = b.customer_id
+                 WHERE {$where_sql}",
+                ...$prepare
+            ) );
+        }
+        return (int) $db->get_var(
+            "SELECT COUNT(*) FROM {$t_bookings} b
+             LEFT JOIN {$t_customers} c ON c.id = b.customer_id
+             WHERE {$where_sql}"
+        );
+        // phpcs:enable
+    }
+
     public static function get_booking( $booking_id ) {
         $db = self::db();
         return $db->get_row( $db->prepare(
@@ -291,13 +340,15 @@ $game_id, $date_to, $date_from
 
     public static function get_booked_slots( $game_id, $date_from, $date_to ) {
         $db = self::db();
+        // Use overlap detection: two slots conflict when start < other_end AND end > other_start.
+        // This catches cases where games share a room but have different start times.
         return $db->get_results( $db->prepare(
             "SELECT slot_start, slot_end FROM " . self::table('bookings') . "
              WHERE game_id = %d
                AND status IN ('confirmed','pending')
-               AND slot_start >= %s
-               AND slot_start <= %s",
-            $game_id, $date_from, $date_to
+               AND slot_start < %s
+               AND slot_end > %s",
+            $game_id, $date_to, $date_from
         ) );
     }
 
