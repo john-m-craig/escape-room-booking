@@ -1,0 +1,521 @@
+/* ── Escape Room Booking — Public Styles ── */
+
+:root {
+    --erb-available:  #22c55e;
+    --erb-booked:     #ef4444;
+    --erb-primary:    #2563eb;
+    --erb-text:       #111827;
+    --erb-muted:      #6b7280;
+    --erb-border:     #e5e7eb;
+    --erb-radius:     8px;
+    --erb-shadow:     0 2px 12px rgba(0,0,0,.08);
+}
+
+/* ── Base ── */
+.erb-wrap {
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--erb-text);
+    box-sizing: border-box;
+}
+.erb-wrap *, .erb-wrap *::before, .erb-wrap *::after { box-sizing: inherit; }
+
+/* ── Calendar ── */
+
+.erb-game-description {
+    font-size: 17px;
+    color: #4b5563;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.erb-calendar__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.erb-calendar__nav-title {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+}
+
+.erb-today-link {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--erb-primary);
+    text-decoration: underline;
+}
+
+.erb-calendar__legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.erb-legend-item { display: flex; align-items: center; gap: 6px; }
+
+.erb-legend-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.erb-calendar__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 40px;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.erb-spinner-dark {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e5e7eb;
+    border-top-color: var(--erb-primary);
+    border-radius: 50%;
+    animation: erb-spin .7s linear infinite;
+}
+
+@keyframes erb-spin { to { transform: rotate(360deg); } }
+
+.erb-calendar__grid-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius);
+}
+
+.erb-calendar__grid {
+    display: grid;
+    min-width: 500px;
+    width: 100%;
+}
+
+.erb-calendar__header-cell {
+    background: #f3f4f6;
+    padding: 11px 8px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    border-right: 1px solid var(--erb-border);
+    border-bottom: 2px solid var(--erb-border);
+    line-height: 1.5;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.erb-today-header { background: #eff6ff; color: var(--erb-primary); }
+
+.erb-cal-day-name {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    opacity: .75;
+}
+
+.erb-cal-day-num {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 2px 0 1px;
+}
+
+.erb-cal-day-month {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: .75;
+}
+
+.erb-time-corner {
+    background: #f9fafb;
+    border-right: 1px solid var(--erb-border);
+    border-bottom: 2px solid var(--erb-border);
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.erb-calendar__time-label {
+    background: #f9fafb;
+    padding: 8px 10px;
+    font-size: 15px;
+    color: var(--erb-muted);
+    text-align: right;
+    border-right: 1px solid var(--erb-border);
+    border-bottom: 1px solid var(--erb-border);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.erb-slot {
+    padding: 9px 5px;
+    border-right: 1px solid var(--erb-border);
+    border-bottom: 1px solid var(--erb-border);
+    text-align: center;
+    font-size: 15px;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter .12s, transform .1s;
+    user-select: none;
+}
+
+.erb-slot--available {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.erb-slot--available:hover {
+    filter: brightness(1.1);
+    transform: scale(1.04);
+    z-index: 1;
+    position: relative;
+    border-radius: 3px;
+}
+
+.erb-slot--available:focus { outline: 3px solid var(--erb-primary); outline-offset: -2px; }
+.erb-slot--booked { cursor: not-allowed; }
+
+.erb-slot--past,
+.erb-slot--notice {
+    background: #f3f4f6;
+    color: #d1d5db;
+    cursor: default;
+    font-size: 14px;
+}
+
+.erb-slot--closed { background: #fafafa; }
+
+.erb-calendar__error {
+    padding: 16px;
+    color: var(--erb-booked);
+    font-size: 16px;
+    border: 1px solid #fecaca;
+    border-radius: var(--erb-radius);
+    background: #fef2f2;
+    margin-top: 8px;
+}
+
+/* ── Booking flow ── */
+
+.erb-booking-wrap {
+    max-width: 580px;
+    margin: 0 auto;
+}
+
+.erb-booking-step {
+    background: #fff;
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius);
+    padding: 28px;
+    box-shadow: var(--erb-shadow);
+}
+
+.erb-booking-step h2 {
+    margin: 0 0 20px;
+    font-size: 22px;
+}
+
+/* Steps */
+.erb-steps {
+    display: flex;
+    margin-bottom: 24px;
+    background: #fff;
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius);
+    overflow: hidden;
+}
+
+.erb-step {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    font-size: 15px;
+    color: #9ca3af;
+}
+
+.erb-step:not(:last-child) { border-right: 1px solid var(--erb-border); }
+
+.erb-step__num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #9ca3af;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.erb-step.is-active .erb-step__num  { background: var(--erb-primary); color: #fff; }
+.erb-step.is-active .erb-step__label { color: var(--erb-primary); font-weight: 600; }
+.erb-step.is-done .erb-step__num    { background: var(--erb-available); color: #fff; }
+
+/* Timer */
+.erb-timer-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: #fef9c3;
+    border: 1px solid #fcd34d;
+    border-radius: var(--erb-radius);
+    padding: 11px 16px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #92400e;
+}
+
+.erb-timer {
+    font-weight: 700;
+    font-size: 18px;
+    background: #fde68a;
+    padding: .16px 8px;
+    border-radius: 4px;
+}
+
+.erb-timer--urgent { animation: erb-pulse 1s infinite; }
+
+@keyframes erb-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
+
+/* Slot summary */
+.erb-slot-summary {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--erb-radius);
+    padding: 11px 16px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #1e40af;
+}
+
+.erb-players-label {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #374151;
+}
+
+/* Player buttons */
+.erb-player-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.erb-player-btn {
+    padding: 14px 8px;
+    border: 2px solid var(--erb-border);
+    border-radius: var(--erb-radius);
+    background: #fff;
+    color: #111827;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, color .15s;
+    font-family: inherit;
+}
+
+.erb-player-btn:hover {
+    border-color: var(--erb-primary);
+    background: #eff6ff;
+    color: var(--erb-primary);
+}
+
+.erb-player-btn.is-selected {
+    border-color: var(--erb-primary);
+    background: var(--erb-primary);
+    color: #fff;
+}
+
+.erb-player-btn__num  { font-size: 26px; font-weight: 700; line-height: 1; }
+.erb-player-btn__word { font-size: 14px; margin-top: 3px; opacity: .75; }
+
+/* Price box */
+.erb-price-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: var(--erb-radius);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.erb-price-box__total    { font-size: 28px; font-weight: 700; color: #166534; }
+.erb-price-box__per-person { font-size: 15px; color: var(--erb-muted); margin-top: 3px; }
+
+/* Booking summary */
+.erb-summary {
+    background: #f9fafb;
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+/* Tabs */
+.erb-checkout-tabs {
+    display: flex;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--erb-border);
+}
+
+.erb-checkout-tab {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--erb-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color .15s, border-color .15s;
+}
+
+.erb-checkout-tab.is-active { color: var(--erb-primary); border-color: var(--erb-primary); }
+
+/* Fields */
+.erb-field { margin-bottom: 16px; }
+
+.erb-field label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+.erb-field input,
+.erb-field select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius);
+    font-size: 16px;
+    font-family: inherit;
+    color: #111827;
+}
+
+.erb-field input:focus,
+.erb-field select:focus {
+    outline: none;
+    border-color: var(--erb-primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* Promo */
+.erb-promo-row { display: flex; gap: 8px; margin-bottom: 16px; }
+
+.erb-promo-row input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius);
+    font-size: 16px;
+    font-family: inherit;
+}
+
+/* Stripe */
+.erb-stripe-element {
+    border: 1px solid var(--erb-border);
+    border-radius: var(--erb-radius);
+    padding: 13px 14px;
+    background: #fff;
+    transition: border-color .15s;
+}
+
+.erb-stripe-element:focus-within {
+    border-color: var(--erb-primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* Buttons */
+.erb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: .732px 22px;
+    border-radius: var(--erb-radius);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: opacity .15s, transform .1s;
+    width: 100%;
+}
+
+.erb-btn:hover  { opacity: .9; }
+.erb-btn:active { transform: scale(.98); }
+.erb-btn--primary { background: var(--erb-primary); color: #fff; }
+.erb-btn--success { background: var(--erb-available); color: #fff; }
+.erb-btn--outline { background: transparent; color: var(--erb-primary); border: 2px solid var(--erb-primary); }
+.erb-btn--danger  { background: var(--erb-booked); color: #fff; }
+.erb-btn--auto    { width: auto; }
+.erb-btn--sm      { padding: 7px 14px; font-size: 14px; }
+
+/* Spinner */
+.erb-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: erb-spin .6s linear infinite;
+}
+
+/* Badges */
+.erb-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.erb-badge--confirmed { background: #dcfce7; color: #166534; }
+
+/* Result */
+.erb-result { text-align: center; padding: 32px 24px; }
+.erb-result__icon { font-size: 56px; margin-bottom: 12px; }
+.erb-result h2 { margin: 0 0 8px; font-size: 24px; }
+.erb-result p  { color: var(--erb-muted); font-size: 16px; }
