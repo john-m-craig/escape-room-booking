@@ -1,0 +1,13 @@
+{
+    "name": "cbsa/escape-room-booking",
+    "description": "WordPress booking plugin for escape room venues (free version)",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require-dev": {
+        "phpunit/phpunit": "^9.6",
+        "yoast/phpunit-polyfills": "^2.0"
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
