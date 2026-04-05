@@ -1,0 +1,18 @@
+# Zip files
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+
+# Node
+node_modules/
+
+# PHPUnit
+vendor/
+.phpunit.result.cache
