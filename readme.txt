@@ -4,7 +4,7 @@ Tags: escape room, booking, stripe, calendar, payments
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ The free version contains links to https://escaperoombookingpro.com for upgrade 
 7. Admin games setup screen
 
 == Changelog ==
+
+= 1.1.6 =
+* Fixed pagination bar not displaying on Bookings and Customers screens
 
 = 1.1.5 =
 * Pagination on Bookings and Customers screens

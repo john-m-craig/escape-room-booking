@@ -3,7 +3,7 @@
  * Plugin Name: Escape Room Booking
  * Plugin URI:  https://escaperoombookingpro.com/lite
  * Description: A complete booking system for escape room venues. Manage games, take bookings and collect payments via Stripe — all from your own WordPress website. Upgrade to Pro for unlimited games, promo codes, reports and more.
- * Version:     1.1.5
+ * Version:     1.1.6
  * Author:      CBSA
  * Author URI:  https://cbsa.uk
  * License:     GPL-2.0+

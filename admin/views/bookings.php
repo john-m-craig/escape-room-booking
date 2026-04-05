@@ -1,27 +1,35 @@
-<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+<?php
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+if ( ! defined( 'ABSPATH' ) ) exit;
+?>
 <div class="wrap erb-admin-page">
     <h1><?php esc_html_e( 'Bookings', 'escape-room-booking' ); ?></h1>
 
     <?php
-    // Filters from query string
-    $search     = sanitize_text_field( $_GET['s']      ?? '' );
-    $status     = sanitize_text_field( $_GET['status'] ?? '' );
-    $game_id    = (int) ( $_GET['game_id'] ?? 0 );
-    $date_from  = sanitize_text_field( $_GET['date_from'] ?? '' );
-    $date_to    = sanitize_text_field( $_GET['date_to']   ?? '' );
+    // Filters
+    $search     = sanitize_text_field( wp_unslash( $_GET['s']        ?? '' ) );
+    $status     = sanitize_text_field( wp_unslash( $_GET['status']   ?? '' ) );
+    $game_id    = (int) ( $_GET['game_id']  ?? 0 );
+    $date_from  = sanitize_text_field( wp_unslash( $_GET['date_from'] ?? '' ) );
+    $date_to    = sanitize_text_field( wp_unslash( $_GET['date_to']   ?? '' ) );
 
-    $args = array( 'limit' => 100 );
-    if ( $search )    $args['search']    = $search;
-    if ( $status )    $args['status']    = $status;
-    if ( $game_id )   $args['game_id']   = $game_id;
-    if ( $date_from ) $args['date_from'] = $date_from . ' 00:00:00';
-    if ( $date_to )   $args['date_to']   = $date_to   . ' 23:59:59';
+    // Pagination
+    $per_page = (int) ( $_GET['per_page'] ?? ERB_Pagination::DEFAULT_PER_PAGE );
+    $paged    = max( 1, (int) ( $_GET['paged'] ?? 1 ) );
 
-    $bookings = ERB_DB::get_bookings( $args );
+    $filter_args = array();
+    if ( $search )    $filter_args['search']    = $search;
+    if ( $status )    $filter_args['status']    = $status;
+    if ( $game_id )   $filter_args['game_id']   = $game_id;
+    if ( $date_from ) $filter_args['date_from'] = $date_from . ' 00:00:00';
+    if ( $date_to )   $filter_args['date_to']   = $date_to   . ' 23:59:59';
+
+    $total    = ERB_DB::count_bookings( $filter_args );
+    $pager    = new ERB_Pagination( $total, $per_page, $paged );
+    $bookings = ERB_DB::get_bookings( array_merge( $filter_args, $pager->query_args() ) );
     $games    = ERB_DB::get_games( false );
 
-    // Revenue total for current filter
+    // Revenue total for current page
     $total_revenue = array_sum( array_map( function( $b ) {
         return $b->status === 'confirmed' ? (int) $b->total_pence : 0;
     }, $bookings ) );
@@ -139,6 +147,7 @@
             <?php endforeach; ?>
             </tbody>
         </table>
+        <?php echo $pager->render(); ?>
         <?php endif; ?>
     </div>
 </div>

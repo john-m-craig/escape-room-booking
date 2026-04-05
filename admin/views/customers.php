@@ -106,6 +106,7 @@ if ( $search ) {
             <?php endforeach; ?>
             </tbody>
         </table>
+        <?php echo $pager->render(); ?>
         <?php endif; ?>
     </div>
 </div>
