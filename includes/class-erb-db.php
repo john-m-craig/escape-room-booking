@@ -182,8 +182,9 @@ class ERB_DB {
         $db = self::db();
         return $db->get_results( $db->prepare(
             "SELECT * FROM " . self::table('blocked_slots') . "
-             WHERE game_id = %d AND slot_start >= %s AND slot_start <= %s",
-            $game_id, $date_from, $date_to
+             WHERE game_id = %d AND slot_start < %s
+AND slot_end > %s",
+$game_id, $date_to, $date_from
         ) );
     }
 
