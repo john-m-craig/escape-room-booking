@@ -55,3 +55,9 @@ if ( ! function_exists( 'trailingslashit' ) )  { function trailingslashit( $v ) 
 if ( ! function_exists( 'current_time' ) )     { function current_time( $type ) { return $type === 'timestamp' ? time() : gmdate( 'Y-m-d H:i:s' ); } }
 if ( ! function_exists( 'date_i18n' ) )        { function date_i18n( $format, $ts = false ) { return gmdate( $format, $ts ?: time() ); } }
 if ( ! function_exists( 'wp_count_posts' ) )   { function wp_count_posts( $type = 'post' ) { return (object)['publish' => 0]; } }
+if ( ! function_exists( 'esc_url' ) )        { function esc_url( $url ) { return htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' ); } }
+if ( ! function_exists( 'esc_attr' ) )       { function esc_attr( $v ) { return htmlspecialchars( $v, ENT_QUOTES, 'UTF-8' ); } }
+if ( ! function_exists( 'esc_html' ) )       { function esc_html( $v ) { return htmlspecialchars( $v, ENT_QUOTES, 'UTF-8' ); } }
+if ( ! function_exists( 'esc_js' ) )         { function esc_js( $v ) { return addslashes( $v ); } }
+if ( ! function_exists( 'wp_kses_post' ) )   { function wp_kses_post( $v ) { return $v; } }
+if ( ! function_exists( 'number_format_i18n' ) ) { function number_format_i18n( $n, $d = 0 ) { return number_format( $n, $d ); } }
