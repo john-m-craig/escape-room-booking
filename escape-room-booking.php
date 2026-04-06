@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-define( 'ERB_VERSION',     '1.0.0' );
+define( 'ERB_VERSION',     '1.1.7' );
 define( 'ERB_LITE',        true );  // Lite version flag
 
 define( 'ERB_PLUGIN_FILE', __FILE__ );
