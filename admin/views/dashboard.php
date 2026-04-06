@@ -184,11 +184,11 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
     <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
         <div class="erb-card" style="flex:1;min-width:160px;text-align:center;padding:1rem;">
             <div style="font-size:1.5rem;font-weight:700;color:var(--erb-navy);"><?php echo (int) $total_bookings; ?></div>
-            <div style="font-size:.8rem;color:var(--erb-neutral);margin-top:.25rem;"><?php esc_html_e( 'All Time Bookings', 'escape-room-booking' ); ?></div>
+            <div style="font-size:.8rem;color:#6b7280;margin-top:.25rem;"><?php esc_html_e( 'All Time Bookings', 'escape-room-booking' ); ?></div>
         </div>
         <div class="erb-card" style="flex:1;min-width:160px;text-align:center;padding:1rem;">
             <div style="font-size:1.5rem;font-weight:700;color:var(--erb-navy);"><?php echo esc_html( ERB_Helpers::format_price( (int) $total_revenue ) ); ?></div>
-            <div style="font-size:.8rem;color:var(--erb-neutral);margin-top:.25rem;"><?php esc_html_e( 'All Time Revenue', 'escape-room-booking' ); ?></div>
+            <div style="font-size:.8rem;color:#6b7280;margin-top:.25rem;"><?php esc_html_e( 'All Time Revenue', 'escape-room-booking' ); ?></div>
         </div>
     </div>
 
@@ -201,24 +201,24 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
                 $is_current = $idx === 11;
             ?>
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;">
-                <div style="font-size:.65rem;color:var(--erb-neutral);white-space:nowrap;">
+                <div style="font-size:.65rem;color:#6b7280;white-space:nowrap;">
                     <?php echo $val > 0 ? esc_html( '£' . number_format( $val, 0 ) ) : ''; ?>
                 </div>
-                <div style="width:100%;background:<?php echo $is_current ? 'var(--erb-orange)' : 'var(--erb-navy)'; ?>;
+                <div style="width:100%;background:<?php echo $is_current ? '#e8621a' : '#0f1f35'; ?>;
                             height:<?php echo (int) $height; ?>px;border-radius:4px 4px 0 0;min-height:<?php echo $val > 0 ? '4' : '0'; ?>px;
                             opacity:<?php echo $is_current ? '1' : '.65'; ?>;transition:opacity .2s;"
                      title="<?php echo esc_attr( $chart_labels[ $idx ] . ': £' . number_format( $val, 2 ) ); ?>">
                 </div>
-                <div style="font-size:.65rem;color:var(--erb-neutral);white-space:nowrap;position:absolute;bottom:0;">
+                <div style="font-size:.65rem;color:#6b7280;white-space:nowrap;position:absolute;bottom:0;">
                     <?php echo esc_html( $chart_labels[ $idx ] ); ?>
                 </div>
             </div>
             <?php endforeach; ?>
         </div>
-        <div style="font-size:.75rem;color:var(--erb-neutral);margin-top:.5rem;">
-            <span style="display:inline-block;width:10px;height:10px;background:var(--erb-orange);border-radius:2px;margin-right:4px;"></span>
+        <div style="font-size:.75rem;color:#6b7280;margin-top:.5rem;">
+            <span style="display:inline-block;width:10px;height:10px;background:#e8621a;border-radius:2px;margin-right:4px;"></span>
             <?php esc_html_e( 'Current month', 'escape-room-booking' ); ?>
-            <span style="display:inline-block;width:10px;height:10px;background:var(--erb-navy);border-radius:2px;margin:0 4px 0 12px;opacity:.65;"></span>
+            <span style="display:inline-block;width:10px;height:10px;background:#0f1f35;border-radius:2px;margin:0 4px 0 12px;opacity:.65;"></span>
             <?php esc_html_e( 'Previous months', 'escape-room-booking' ); ?>
         </div>
     </div>
@@ -252,7 +252,7 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
     </div>
     <?php else : ?>
     <div class="erb-card">
-        <p style="color:var(--erb-neutral);font-size:.9rem;margin:0;">
+        <p style="color:#6b7280;font-size:.9rem;margin:0;">
             <?php esc_html_e( 'No bookings today.', 'escape-room-booking' ); ?>
         </p>
     </div>
