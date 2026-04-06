@@ -204,7 +204,7 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
                 <div style="font-size:.65rem;color:#6b7280;white-space:nowrap;">
                     <?php echo $val > 0 ? esc_html( '£' . number_format( $val, 0 ) ) : ''; ?>
                 </div>
-                <div style="width:100%;background:<?php echo $is_current ? '#e8621a' : '#0f1f35'; ?>;
+                <div style="width:100%;background:<?php echo $is_current ? '#e8621a' : '#2563eb'; ?>;
                             height:<?php echo (int) $height; ?>px;border-radius:4px 4px 0 0;min-height:<?php echo $val > 0 ? '4' : '0'; ?>px;
                             opacity:<?php echo $is_current ? '1' : '.65'; ?>;transition:opacity .2s;"
                      title="<?php echo esc_attr( $chart_labels[ $idx ] . ': £' . number_format( $val, 2 ) ); ?>">
@@ -218,7 +218,7 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
         <div style="font-size:.75rem;color:#6b7280;margin-top:.5rem;">
             <span style="display:inline-block;width:10px;height:10px;background:#e8621a;border-radius:2px;margin-right:4px;"></span>
             <?php esc_html_e( 'Current month', 'escape-room-booking' ); ?>
-            <span style="display:inline-block;width:10px;height:10px;background:#0f1f35;border-radius:2px;margin:0 4px 0 12px;opacity:.65;"></span>
+            <span style="display:inline-block;width:10px;height:10px;background:#2563eb;border-radius:2px;margin:0 4px 0 12px;opacity:.65;"></span>
             <?php esc_html_e( 'Previous months', 'escape-room-booking' ); ?>
         </div>
     </div>
