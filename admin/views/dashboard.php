@@ -192,33 +192,66 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
         </div>
     </div>
 
-    <!-- 12-month revenue chart -->
+    <!-- 12-month revenue chart — SVG based, no CSS dependency -->
     <div class="erb-card" style="margin-bottom:1rem;">
         <h2 style="margin-bottom:1.25rem;"><?php esc_html_e( 'Revenue — Last 12 Months', 'escape-room-booking' ); ?></h2>
-        <div style="position:relative;height:220px;display:flex;align-items:flex-end;gap:6px;padding-bottom:28px;">
+        <?php
+        $svg_w      = 600;
+        $svg_h      = 230;
+        $bar_area_h = 150;
+        $top_pad    = 30;
+        $label_h    = 30;
+        $n          = count( $chart_values );
+        $bar_w      = floor( ( $svg_w - ( $n + 1 ) * 4 ) / $n );
+        $color_cur  = '#e8621a';
+        $color_prev = '#2563eb';
+        ?>
+        <svg viewBox="0 0 <?php echo (int) $svg_w; ?> <?php echo (int) $svg_h; ?>"
+             style="width:100%;max-width:100%;display:block;"
+             xmlns="http://www.w3.org/2000/svg">
             <?php foreach ( $chart_values as $idx => $val ) :
-                $height = $chart_max > 0 ? round( ( $val / $chart_max ) * 180 ) : 0;
-                $is_current = $idx === 11;
+                $bar_h     = $chart_max > 0 ? round( ( $val / $chart_max ) * $bar_area_h ) : 0;
+                $bar_h     = max( $bar_h, $val > 0 ? 3 : 0 );
+                $x         = 4 + $idx * ( $bar_w + 4 );
+                $y         = $top_pad + $bar_area_h - $bar_h;
+                $is_cur    = $idx === 11;
+                $colour    = $is_cur ? $color_cur : $color_prev;
+                $opacity   = $is_cur ? '1' : '0.65';
+                $label     = $chart_labels[ $idx ];
+                $val_label = $val > 0 ? '£' . number_format( $val, 0 ) : '';
             ?>
-            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;">
-                <div style="font-size:.65rem;color:#6b7280;white-space:nowrap;">
-                    <?php echo $val > 0 ? esc_html( '£' . number_format( $val, 0 ) ) : ''; ?>
-                </div>
-                <div style="width:100%;background:<?php echo $is_current ? '#e8621a' : '#2563eb'; ?>;
-                            height:<?php echo (int) $height; ?>px;border-radius:4px 4px 0 0;min-height:<?php echo $val > 0 ? '4' : '0'; ?>px;
-                            opacity:<?php echo $is_current ? '1' : '.65'; ?>;transition:opacity .2s;"
-                     title="<?php echo esc_attr( $chart_labels[ $idx ] . ': £' . number_format( $val, 2 ) ); ?>">
-                </div>
-                <div style="font-size:.65rem;color:#6b7280;white-space:nowrap;position:absolute;bottom:0;">
-                    <?php echo esc_html( $chart_labels[ $idx ] ); ?>
-                </div>
-            </div>
+            <?php if ( $bar_h > 0 ) : ?>
+            <rect x="<?php echo (int) $x; ?>"
+                  y="<?php echo (int) $y; ?>"
+                  width="<?php echo (int) $bar_w; ?>"
+                  height="<?php echo (int) $bar_h; ?>"
+                  fill="<?php echo esc_attr( $colour ); ?>"
+                  opacity="<?php echo esc_attr( $opacity ); ?>"
+                  rx="3">
+                <title><?php echo esc_html( $label . ': £' . number_format( $val, 2 ) ); ?></title>
+            </rect>
+            <?php endif; ?>
+            <?php if ( $val_label ) : ?>
+            <text x="<?php echo (int) ( $x + $bar_w / 2 ); ?>"
+                  y="<?php echo max( 12, (int) ( $y - 4 ) ); ?>"
+                  text-anchor="middle"
+                  font-size="9"
+                  fill="#6b7280"><?php echo esc_html( $val_label ); ?></text>
+            <?php endif; ?>
+            <text x="<?php echo (int) ( $x + $bar_w / 2 ); ?>"
+                  y="<?php echo (int) ( $top_pad + $bar_area_h + $label_h - 4 ); ?>"
+                  text-anchor="middle"
+                  font-size="9"
+                  fill="<?php echo $is_cur ? esc_attr( $color_cur ) : '#6b7280'; ?>"
+                  font-weight="<?php echo $is_cur ? 'bold' : 'normal'; ?>">
+                <?php echo esc_html( $label ); ?>
+            </text>
             <?php endforeach; ?>
-        </div>
-        <div style="font-size:.75rem;color:#6b7280;margin-top:.5rem;">
-            <span style="display:inline-block;width:10px;height:10px;background:#e8621a;border-radius:2px;margin-right:4px;"></span>
+        </svg>
+        <div style="font-size:.75rem;color:#6b7280;margin-top:.25rem;">
+            <span style="display:inline-block;width:10px;height:10px;background:#e8621a;border-radius:2px;margin-right:4px;vertical-align:middle;"></span>
             <?php esc_html_e( 'Current month', 'escape-room-booking' ); ?>
-            <span style="display:inline-block;width:10px;height:10px;background:#2563eb;border-radius:2px;margin:0 4px 0 12px;opacity:.65;"></span>
+            <span style="display:inline-block;width:10px;height:10px;background:#2563eb;border-radius:2px;margin:0 4px 0 12px;opacity:.65;vertical-align:middle;"></span>
             <?php esc_html_e( 'Previous months', 'escape-room-booking' ); ?>
         </div>
     </div>
