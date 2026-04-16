@@ -135,7 +135,7 @@ require_once ERB_PLUGIN_DIR . 'includes/class-erb-pagination.php';
     public function add_cron_intervals( $schedules ) {
         $schedules['erb_every_five_minutes'] = array(
             'interval' => 300,
-            'display'  => __( 'Every 5 Minutes', 'escape-room-booking' ),
+            'display'  => __( 'Every 5 Minutes', 'ettrick-escape-room-booking' ),
         );
         return $schedules;
     }

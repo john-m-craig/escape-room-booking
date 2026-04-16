@@ -1,8 +1,8 @@
-=== Escape Room Booking ===
-Contributors: cbsa
+=== Ettrick Escape Room Booking ===
+Contributors: john_m_craig, cbsa
 Tags: escape room, booking, stripe, calendar, payments
 Requires at least: 6.0
-Tested up to: 6.9
+Tested up to: 6.7
 Requires PHP: 7.4
 Stable tag: 1.1.7
 License: GPLv2 or later
@@ -12,7 +12,7 @@ A complete booking and payment system built specifically for escape room venues.
 
 == Description ==
 
-**Escape Room Booking** gives escape room venues everything they need to take bookings and collect payments directly from their own WordPress website — no monthly SaaS fees, no commissions on bookings.
+**Ettrick Escape Room Booking** gives escape room venues everything they need to take bookings and collect payments directly from their own WordPress website — no monthly SaaS fees, no commissions on bookings.
 
 = Free Version Features =
 
@@ -126,31 +126,6 @@ The free version contains links to https://escaperoombookingpro.com for upgrade 
 7. Admin games setup screen
 
 == Changelog ==
-
-= 1.1.7 =
-* Enhanced dashboard with period selector (this week/month/year, custom range)
-* Revenue by month bar chart — last 12 months
-* Period stats: bookings, revenue, players, average booking value
-* All time totals always visible
-
-= 1.1.6 =
-* Fixed pagination bar not displaying on Bookings and Customers screens
-
-= 1.1.5 =
-* Pagination on Bookings and Customers screens
-* Configurable rows per page (10, 25, 50, 100)
-
-= 1.1.4 =
-* Fixed shared room overlap detection — staggered start times now correctly blocked
-
-= 1.1.3 =
-* Promo code field hidden (Pro feature only)
-* Bookings table now shows Booked On date alongside slot date
-
-= 1.1.2 =
-* Fixed Add Game button not working (missing script tags)
-* Fixed Customers page critical error
-* Bookings now sorted newest first
 
 = 1.1.1 =
 * Improved 2-game limit UX — greyed button with inline notice

@@ -7,13 +7,13 @@ class ERB_Admin {
     // ─── Admin Menu ───────────────────────────────────────────────────────────
 
     public function register_admin_menu() {
-        add_menu_page( __( 'Escape Room Booking', 'escape-room-booking' ), __( 'Escape Rooms', 'escape-room-booking' ), 'manage_options', 'erb-dashboard', array( $this, 'page_dashboard' ), 'dashicons-calendar-alt', 30 );
-        add_submenu_page( 'erb-dashboard', __( 'Dashboard',        'escape-room-booking' ), __( 'Dashboard',              'escape-room-booking' ), 'manage_options', 'erb-dashboard', array( $this, 'page_dashboard' ) );
-        add_submenu_page( 'erb-dashboard', __( 'Games',            'escape-room-booking' ), __( 'Games',                  'escape-room-booking' ), 'manage_options', 'erb-games',     array( $this, 'page_games' ) );
-        add_submenu_page( 'erb-dashboard', __( 'Bookings',         'escape-room-booking' ), __( 'Bookings',               'escape-room-booking' ), 'manage_options', 'erb-bookings',  array( $this, 'page_bookings' ) );
-        add_submenu_page( 'erb-dashboard', __( 'Customers',        'escape-room-booking' ), __( 'Customers',              'escape-room-booking' ), 'manage_options', 'erb-customers', array( $this, 'page_customers' ) );
-        add_submenu_page( 'erb-dashboard', __( 'Settings',         'escape-room-booking' ), __( 'Settings',               'escape-room-booking' ), 'manage_options', 'erb-settings',  array( $this, 'page_settings' ) );
-        add_submenu_page( 'erb-dashboard', __( 'Upgrade to Pro',   'escape-room-booking' ), __( 'Upgrade to Pro &#x1F680;', 'escape-room-booking' ), 'manage_options', 'erb-upgrade',   array( $this, 'page_upgrade' ) );
+        add_menu_page( __( 'Escape Room Booking', 'ettrick-escape-room-booking' ), __( 'Escape Rooms', 'ettrick-escape-room-booking' ), 'manage_options', 'erb-dashboard', array( $this, 'page_dashboard' ), 'dashicons-calendar-alt', 30 );
+        add_submenu_page( 'erb-dashboard', __( 'Dashboard',        'ettrick-escape-room-booking' ), __( 'Dashboard',              'ettrick-escape-room-booking' ), 'manage_options', 'erb-dashboard', array( $this, 'page_dashboard' ) );
+        add_submenu_page( 'erb-dashboard', __( 'Games',            'ettrick-escape-room-booking' ), __( 'Games',                  'ettrick-escape-room-booking' ), 'manage_options', 'erb-games',     array( $this, 'page_games' ) );
+        add_submenu_page( 'erb-dashboard', __( 'Bookings',         'ettrick-escape-room-booking' ), __( 'Bookings',               'ettrick-escape-room-booking' ), 'manage_options', 'erb-bookings',  array( $this, 'page_bookings' ) );
+        add_submenu_page( 'erb-dashboard', __( 'Customers',        'ettrick-escape-room-booking' ), __( 'Customers',              'ettrick-escape-room-booking' ), 'manage_options', 'erb-customers', array( $this, 'page_customers' ) );
+        add_submenu_page( 'erb-dashboard', __( 'Settings',         'ettrick-escape-room-booking' ), __( 'Settings',               'ettrick-escape-room-booking' ), 'manage_options', 'erb-settings',  array( $this, 'page_settings' ) );
+        add_submenu_page( 'erb-dashboard', __( 'Upgrade to Pro',   'ettrick-escape-room-booking' ), __( 'Upgrade to Pro &#x1F680;', 'ettrick-escape-room-booking' ), 'manage_options', 'erb-upgrade',   array( $this, 'page_upgrade' ) );
     }
 
     // ─── Settings ─────────────────────────────────────────────────────────────
@@ -60,7 +60,7 @@ class ERB_Admin {
         ERB_Helpers::verify_nonce( $_POST['nonce'] ?? '', 'erb_admin_nonce' );
         if ( ! current_user_can( 'manage_options' ) ) ERB_Helpers::json_error( 'Unauthorised', 403 );
         $name = sanitize_text_field( wp_unslash( $_POST['name'] ) );
-        if ( empty( $name ) ) ERB_Helpers::json_error( __( 'Room name is required.', 'escape-room-booking' ) );
+        if ( empty( $name ) ) ERB_Helpers::json_error( __( 'Room name is required.', 'ettrick-escape-room-booking' ) );
         $data = array( 'name' => $name, 'description' => sanitize_text_field( wp_unslash( $_POST['description'] ) ) );
         if ( ! empty( $_POST['id'] ) ) $data['id'] = (int) $_POST['id'];
         $id = ERB_DB::upsert_room( $data );
@@ -91,8 +91,8 @@ class ERB_Admin {
             }
         }
         $name = sanitize_text_field( wp_unslash( $_POST['name'] ) );
-        if ( empty( $name ) ) ERB_Helpers::json_error( __( 'Game name is required.', 'escape-room-booking' ) );
-        if ( empty( $_POST['room_id'] ) ) ERB_Helpers::json_error( __( 'Please select a physical room.', 'escape-room-booking' ) );
+        if ( empty( $name ) ) ERB_Helpers::json_error( __( 'Game name is required.', 'ettrick-escape-room-booking' ) );
+        if ( empty( $_POST['room_id'] ) ) ERB_Helpers::json_error( __( 'Please select a physical room.', 'ettrick-escape-room-booking' ) );
         $data = array(
             'room_id'              => (int) $_POST['room_id'],
             'name'                 => $name,

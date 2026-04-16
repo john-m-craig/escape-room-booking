@@ -175,8 +175,8 @@ class ERB_Helpers {
      * Verify a nonce and die on failure.
      */
     public static function verify_nonce( $nonce, $action ) {
-        if ( ! wp_verify_nonce( $nonce, $action ) ) {
-            self::json_error( __( 'Security check failed.', 'escape-room-booking' ), 403 );
+        if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $nonce ) ), $action ) ) {
+            self::json_error( __( 'Security check failed.', 'ettrick-escape-room-booking' ), 403 );
         }
     }
 
@@ -191,6 +191,6 @@ class ERB_Helpers {
         if ( empty( $_SESSION['erb_session_key'] ) ) {
             $_SESSION['erb_session_key'] = self::generate_session_key();
         }
-        return $_SESSION['erb_session_key'];
+        return sanitize_text_field( $_SESSION['erb_session_key'] );
     }
 }

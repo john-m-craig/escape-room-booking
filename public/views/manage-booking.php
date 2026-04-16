@@ -103,10 +103,10 @@ $total = $booking ? ERB_Helpers::format_price( $booking->total_pence )          
     <div class="erb-booking-step">
         <div class="erb-result">
             <div class="erb-result__icon">✅</div>
-            <h2><?php esc_html_e( 'Booking Cancelled', 'escape-room-booking' ); ?></h2>
-            <p style="font-size:16px;color:#6b7280;margin-bottom:24px;"><?php esc_html_e( 'Your booking has been cancelled and a confirmation email has been sent.', 'escape-room-booking' ); ?></p>
+            <h2><?php esc_html_e( 'Booking Cancelled', 'ettrick-escape-room-booking' ); ?></h2>
+            <p style="font-size:16px;color:#6b7280;margin-bottom:24px;"><?php esc_html_e( 'Your booking has been cancelled and a confirmation email has been sent.', 'ettrick-escape-room-booking' ); ?></p>
             <a href="<?php echo esc_url( ERB_Helpers::get_browse_url() ); ?>" class="erb-btn erb-btn--primary" style="display:inline-flex;width:auto;">
-                <?php esc_html_e( 'Book Again', 'escape-room-booking' ); ?>
+                <?php esc_html_e( 'Book Again', 'ettrick-escape-room-booking' ); ?>
             </a>
         </div>
     </div>
@@ -115,8 +115,8 @@ $total = $booking ? ERB_Helpers::format_price( $booking->total_pence )          
     <div class="erb-booking-step">
         <div class="erb-result">
             <div class="erb-result__icon">🔍</div>
-            <h2><?php esc_html_e( 'Booking Not Found', 'escape-room-booking' ); ?></h2>
-            <p><?php esc_html_e( 'This link may have expired or the booking reference is invalid. Please check your confirmation email.', 'escape-room-booking' ); ?></p>
+            <h2><?php esc_html_e( 'Booking Not Found', 'ettrick-escape-room-booking' ); ?></h2>
+            <p><?php esc_html_e( 'This link may have expired or the booking reference is invalid. Please check your confirmation email.', 'ettrick-escape-room-booking' ); ?></p>
         </div>
     </div>
 
@@ -124,11 +124,11 @@ $total = $booking ? ERB_Helpers::format_price( $booking->total_pence )          
     <div class="erb-booking-step">
         <div class="erb-result">
             <div class="erb-result__icon">✅</div>
-            <h2><?php esc_html_e( 'Booking Updated', 'escape-room-booking' ); ?></h2>
-            <p><?php esc_html_e( 'Your booking has been updated and a confirmation email has been sent.', 'escape-room-booking' ); ?></p>
+            <h2><?php esc_html_e( 'Booking Updated', 'ettrick-escape-room-booking' ); ?></h2>
+            <p><?php esc_html_e( 'Your booking has been updated and a confirmation email has been sent.', 'ettrick-escape-room-booking' ); ?></p>
             <a href="<?php echo esc_url( ERB_Helpers::manage_booking_url( $token ) ); ?>"
                class="erb-btn erb-btn--outline" style="margin-top:20px;display:inline-flex;width:auto;">
-                <?php esc_html_e( 'View My Booking', 'escape-room-booking' ); ?>
+                <?php esc_html_e( 'View My Booking', 'ettrick-escape-room-booking' ); ?>
             </a>
         </div>
     </div>
@@ -137,10 +137,10 @@ $total = $booking ? ERB_Helpers::format_price( $booking->total_pence )          
     <div class="erb-booking-step">
         <div class="erb-result">
             <div class="erb-result__icon">❌</div>
-            <h2><?php esc_html_e( 'Booking Cancelled', 'escape-room-booking' ); ?></h2>
-            <p><?php esc_html_e( 'This booking has already been cancelled.', 'escape-room-booking' ); ?></p>
+            <h2><?php esc_html_e( 'Booking Cancelled', 'ettrick-escape-room-booking' ); ?></h2>
+            <p><?php esc_html_e( 'This booking has already been cancelled.', 'ettrick-escape-room-booking' ); ?></p>
             <a href="<?php echo esc_url( ERB_Helpers::get_browse_url() ); ?>" class="erb-btn erb-btn--primary" style="margin-top:20px;display:inline-flex;width:auto;">
-                <?php esc_html_e( 'Make a New Booking', 'escape-room-booking' ); ?>
+                <?php esc_html_e( 'Make a New Booking', 'ettrick-escape-room-booking' ); ?>
             </a>
         </div>
     </div>
@@ -148,19 +148,19 @@ $total = $booking ? ERB_Helpers::format_price( $booking->total_pence )          
 <?php else : ?>
     <!-- Booking details -->
     <div class="erb-booking-step">
-        <h2><?php esc_html_e( 'Your Booking', 'escape-room-booking' ); ?></h2>
+        <h2><?php esc_html_e( 'Your Booking', 'ettrick-escape-room-booking' ); ?></h2>
 
         <div class="erb-summary">
             <table style="width:100%;border-collapse:collapse;font-size:16px;">
                 <?php
                 $rows = array(
-                    __( 'Reference', 'escape-room-booking' ) => '<code style="font-size:15px;">' . esc_html( $booking->booking_ref ) . '</code>',
-                    __( 'Game',      'escape-room-booking' ) => esc_html( $booking->game_name ),
-                    __( 'Date',      'escape-room-booking' ) => esc_html( $date ),
-                    __( 'Time',      'escape-room-booking' ) => esc_html( $time ),
-                    __( 'Players',   'escape-room-booking' ) => esc_html( $booking->player_count ),
-                    __( 'Total',     'escape-room-booking' ) => '<strong>' . esc_html( $total ) . '</strong>',
-                    __( 'Status',    'escape-room-booking' ) => '<span class="erb-badge erb-badge--' . esc_attr( $booking->status ) . '">' . esc_html( ucfirst( $booking->status ) ) . '</span>',
+                    __( 'Reference', 'ettrick-escape-room-booking' ) => '<code style="font-size:15px;">' . esc_html( $booking->booking_ref ) . '</code>',
+                    __( 'Game',      'ettrick-escape-room-booking' ) => esc_html( $booking->game_name ),
+                    __( 'Date',      'ettrick-escape-room-booking' ) => esc_html( $date ),
+                    __( 'Time',      'ettrick-escape-room-booking' ) => esc_html( $time ),
+                    __( 'Players',   'ettrick-escape-room-booking' ) => esc_html( $booking->player_count ),
+                    __( 'Total',     'ettrick-escape-room-booking' ) => '<strong>' . esc_html( $total ) . '</strong>',
+                    __( 'Status',    'ettrick-escape-room-booking' ) => '<span class="erb-badge erb-badge--' . esc_attr( $booking->status ) . '">' . esc_html( ucfirst( $booking->status ) ) . '</span>',
                 );
                 foreach ( $rows as $label => $value ) :
                 ?>
@@ -176,7 +176,7 @@ $total = $booking ? ERB_Helpers::format_price( $booking->total_pence )          
 
         <!-- Change number of players -->
         <div style="margin-bottom:24px;">
-            <h3 style="font-size:18px;margin:0 0 12px;"><?php esc_html_e( 'Change Number of Players', 'escape-room-booking' ); ?></h3>
+            <h3 style="font-size:18px;margin:0 0 12px;"><?php esc_html_e( 'Change Number of Players', 'ettrick-escape-room-booking' ); ?></h3>
             <form method="post">
                 <?php wp_nonce_field( 'erb_manage_' . $token ); ?>
                 <input type="hidden" name="_erb_token" value="<?php echo esc_attr( $token ); ?>">
@@ -189,13 +189,13 @@ $total = $booking ? ERB_Helpers::format_price( $booking->total_pence )          
                             $price = ERB_DB::get_price( $booking->game_id, $p );
                         ?>
                         <option value="<?php echo absint( $p ); ?>" <?php selected( $booking->player_count, $p ); ?>>
-                            <?php echo absint( $p ); ?> <?php esc_html_e( 'players', 'escape-room-booking' ); ?>
+                            <?php echo absint( $p ); ?> <?php esc_html_e( 'players', 'ettrick-escape-room-booking' ); ?>
                             <?php if ( $price ) echo '&mdash; ' . esc_html( ERB_Helpers::format_price( $price ) ); ?>
                         </option>
                         <?php endfor; ?>
                     </select>
                     <button type="submit" class="erb-btn erb-btn--primary" style="width:auto;display:inline-flex;">
-                        <?php esc_html_e( 'Update Players', 'escape-room-booking' ); ?>
+                        <?php esc_html_e( 'Update Players', 'ettrick-escape-room-booking' ); ?>
                     </button>
                 </div>
             </form>
@@ -203,27 +203,27 @@ $total = $booking ? ERB_Helpers::format_price( $booking->total_pence )          
 
         <!-- Change date/time — link back to calendar -->
         <div style="margin-bottom:24px;">
-            <h3 style="font-size:18px;margin:0 0 8px;"><?php esc_html_e( 'Change Date or Time', 'escape-room-booking' ); ?></h3>
+            <h3 style="font-size:18px;margin:0 0 8px;"><?php esc_html_e( 'Change Date or Time', 'ettrick-escape-room-booking' ); ?></h3>
             <p style="font-size:15px;color:#6b7280;margin:0 0 12px;">
-                <?php esc_html_e( 'To change your date or time, cancel this booking and make a new one from the calendar.', 'escape-room-booking' ); ?>
+                <?php esc_html_e( 'To change your date or time, cancel this booking and make a new one from the calendar.', 'ettrick-escape-room-booking' ); ?>
             </p>
             <a href="<?php echo esc_url( ERB_Helpers::get_browse_url() ); ?>" class="erb-btn erb-btn--outline" style="width:auto;display:inline-flex;">
-                <?php esc_html_e( 'Go to Calendar', 'escape-room-booking' ); ?>
+                <?php esc_html_e( 'Go to Calendar', 'ettrick-escape-room-booking' ); ?>
             </a>
         </div>
 
         <!-- Cancel -->
         <div style="border-top:1px solid #fee2e2;padding-top:20px;margin-top:8px;">
-            <h3 style="font-size:18px;margin:0 0 8px;color:#dc2626;"><?php esc_html_e( 'Cancel Booking', 'escape-room-booking' ); ?></h3>
+            <h3 style="font-size:18px;margin:0 0 8px;color:#dc2626;"><?php esc_html_e( 'Cancel Booking', 'ettrick-escape-room-booking' ); ?></h3>
             <p style="font-size:15px;color:#6b7280;margin:0 0 12px;">
-                <?php esc_html_e( 'Cancellations are subject to our cancellation policy. Refunds are processed manually by our team.', 'escape-room-booking' ); ?>
+                <?php esc_html_e( 'Cancellations are subject to our cancellation policy. Refunds are processed manually by our team.', 'ettrick-escape-room-booking' ); ?>
             </p>
             <form method="post" onsubmit="return confirm('Are you sure you want to cancel this booking? This cannot be undone.');">
                 <?php wp_nonce_field( 'erb_manage_' . $token ); ?>
                 <input type="hidden" name="_erb_token" value="<?php echo esc_attr( $token ); ?>">
                 <input type="hidden" name="erb_manage_action" value="cancel">
                 <button type="submit" class="erb-btn erb-btn--danger" style="width:auto;display:inline-flex;">
-                    <?php esc_html_e( 'Cancel My Booking', 'escape-room-booking' ); ?>
+                    <?php esc_html_e( 'Cancel My Booking', 'ettrick-escape-room-booking' ); ?>
                 </button>
             </form>
         </div>

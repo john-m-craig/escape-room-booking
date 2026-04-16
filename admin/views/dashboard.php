@@ -17,34 +17,34 @@ switch ( $period ) {
     case 'this_week':
         $from = gmdate( 'Y-m-d', strtotime( 'monday this week' ) );
         $to   = gmdate( 'Y-m-d', strtotime( 'sunday this week' ) );
-        $label = __( 'This Week', 'escape-room-booking' );
+        $label = __( 'This Week', 'ettrick-escape-room-booking' );
         break;
     case 'last_month':
         $from  = gmdate( 'Y-m-01', strtotime( 'first day of last month' ) );
         $to    = gmdate( 'Y-m-t',  strtotime( 'last day of last month' ) );
-        $label = __( 'Last Month', 'escape-room-booking' );
+        $label = __( 'Last Month', 'ettrick-escape-room-booking' );
         break;
     case 'this_year':
         $from  = "{$year}-01-01";
         $to    = "{$year}-12-31";
-        $label = __( 'This Year', 'escape-room-booking' );
+        $label = __( 'This Year', 'ettrick-escape-room-booking' );
         break;
     case 'last_year':
         $y     = $year - 1;
         $from  = "{$y}-01-01";
         $to    = "{$y}-12-31";
-        $label = __( 'Last Year', 'escape-room-booking' );
+        $label = __( 'Last Year', 'ettrick-escape-room-booking' );
         break;
     case 'custom':
         $from  = $date_from ?: $today;
         $to    = $date_to   ?: $today;
-        $label = __( 'Custom Range', 'escape-room-booking' );
+        $label = __( 'Custom Range', 'ettrick-escape-room-booking' );
         break;
     default: // this_month
         $period = 'this_month';
         $from   = gmdate( 'Y-m-01' );
         $to     = gmdate( 'Y-m-t' );
-        $label  = __( 'This Month', 'escape-room-booking' );
+        $label  = __( 'This Month', 'ettrick-escape-room-booking' );
         break;
 }
 
@@ -105,13 +105,13 @@ $chart_values_json = json_encode( $chart_values );
 $chart_max         = max( array_merge( $chart_values, [1] ) );
 ?>
 <div class="wrap erb-admin-page">
-    <h1><?php esc_html_e( 'Dashboard', 'escape-room-booking' ); ?></h1>
+    <h1><?php esc_html_e( 'Dashboard', 'ettrick-escape-room-booking' ); ?></h1>
 
     <?php if ( ! empty( $stale ) ) : ?>
     <div class="erb-notice erb-notice--error">
-        <strong><?php esc_html_e( 'Attention:', 'escape-room-booking' ); ?></strong>
-        <?php echo count( $stale ); ?> <?php esc_html_e( 'booking(s) are stuck in Pending — check your webhook settings.', 'escape-room-booking' ); ?>
-        <a href="<?php echo esc_url( admin_url( 'admin.php?page=erb-settings' ) ); ?>"><?php esc_html_e( 'Settings →', 'escape-room-booking' ); ?></a>
+        <strong><?php esc_html_e( 'Attention:', 'ettrick-escape-room-booking' ); ?></strong>
+        <?php echo count( $stale ); ?> <?php esc_html_e( 'booking(s) are stuck in Pending — check your webhook settings.', 'ettrick-escape-room-booking' ); ?>
+        <a href="<?php echo esc_url( admin_url( 'admin.php?page=erb-settings' ) ); ?>"><?php esc_html_e( 'Settings →', 'ettrick-escape-room-booking' ); ?></a>
         <ul style="margin:.5rem 0 0 1rem;font-size:.85rem;">
             <?php foreach ( $stale as $s ) : ?>
             <li><?php echo esc_html( $s->booking_ref ); ?> — <?php echo esc_html( $s->email ); ?> — <?php echo esc_html( $s->created_at ); ?></li>
@@ -125,15 +125,15 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
         <form method="get" action="" style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end;">
             <input type="hidden" name="page" value="erb-dashboard">
             <div class="erb-form-group">
-                <label><?php esc_html_e( 'Period', 'escape-room-booking' ); ?></label>
+                <label><?php esc_html_e( 'Period', 'ettrick-escape-room-booking' ); ?></label>
                 <select name="period" onchange="document.getElementById('erb-custom-range').style.display=this.value==='custom'?'flex':'none'">
                     <?php foreach ( array(
-                        'this_week'  => __( 'This Week',  'escape-room-booking' ),
-                        'this_month' => __( 'This Month', 'escape-room-booking' ),
-                        'last_month' => __( 'Last Month', 'escape-room-booking' ),
-                        'this_year'  => __( 'This Year',  'escape-room-booking' ),
-                        'last_year'  => __( 'Last Year',  'escape-room-booking' ),
-                        'custom'     => __( 'Custom…',    'escape-room-booking' ),
+                        'this_week'  => __( 'This Week',  'ettrick-escape-room-booking' ),
+                        'this_month' => __( 'This Month', 'ettrick-escape-room-booking' ),
+                        'last_month' => __( 'Last Month', 'ettrick-escape-room-booking' ),
+                        'this_year'  => __( 'This Year',  'ettrick-escape-room-booking' ),
+                        'last_year'  => __( 'Last Year',  'ettrick-escape-room-booking' ),
+                        'custom'     => __( 'Custom…',    'ettrick-escape-room-booking' ),
                     ) as $val => $lbl ) : ?>
                     <option value="<?php echo esc_attr( $val ); ?>" <?php selected( $period, $val ); ?>><?php echo esc_html( $lbl ); ?></option>
                     <?php endforeach; ?>
@@ -141,17 +141,17 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
             </div>
             <div id="erb-custom-range" style="display:<?php echo $period === 'custom' ? 'flex' : 'none'; ?>;gap:.75rem;align-items:flex-end;flex-wrap:wrap;">
                 <div class="erb-form-group">
-                    <label><?php esc_html_e( 'From', 'escape-room-booking' ); ?></label>
+                    <label><?php esc_html_e( 'From', 'ettrick-escape-room-booking' ); ?></label>
                     <input type="date" name="date_from" value="<?php echo esc_attr( $date_from ); ?>">
                 </div>
                 <div class="erb-form-group">
-                    <label><?php esc_html_e( 'To', 'escape-room-booking' ); ?></label>
+                    <label><?php esc_html_e( 'To', 'ettrick-escape-room-booking' ); ?></label>
                     <input type="date" name="date_to" value="<?php echo esc_attr( $date_to ); ?>">
                 </div>
             </div>
             <div class="erb-form-group">
                 <label>&nbsp;</label>
-                <button type="submit" class="erb-btn erb-btn--primary erb-btn--auto"><?php esc_html_e( 'Apply', 'escape-room-booking' ); ?></button>
+                <button type="submit" class="erb-btn erb-btn--primary erb-btn--auto"><?php esc_html_e( 'Apply', 'ettrick-escape-room-booking' ); ?></button>
             </div>
         </form>
     </div>
@@ -161,22 +161,22 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
         <div class="erb-stat-box">
             <div class="erb-stat-box__label" style="margin-bottom:.25rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;opacity:.7;"><?php echo esc_html( $label ); ?></div>
             <div class="erb-stat-box__value"><?php echo count( $period_bookings ); ?></div>
-            <div class="erb-stat-box__label"><?php esc_html_e( 'Bookings', 'escape-room-booking' ); ?></div>
+            <div class="erb-stat-box__label"><?php esc_html_e( 'Bookings', 'ettrick-escape-room-booking' ); ?></div>
         </div>
         <div class="erb-stat-box">
             <div class="erb-stat-box__label" style="margin-bottom:.25rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;opacity:.7;"><?php echo esc_html( $label ); ?></div>
             <div class="erb-stat-box__value"><?php echo esc_html( ERB_Helpers::format_price( $period_revenue ) ); ?></div>
-            <div class="erb-stat-box__label"><?php esc_html_e( 'Revenue', 'escape-room-booking' ); ?></div>
+            <div class="erb-stat-box__label"><?php esc_html_e( 'Revenue', 'ettrick-escape-room-booking' ); ?></div>
         </div>
         <div class="erb-stat-box">
             <div class="erb-stat-box__label" style="margin-bottom:.25rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;opacity:.7;"><?php echo esc_html( $label ); ?></div>
             <div class="erb-stat-box__value"><?php echo (int) $period_players; ?></div>
-            <div class="erb-stat-box__label"><?php esc_html_e( 'Players', 'escape-room-booking' ); ?></div>
+            <div class="erb-stat-box__label"><?php esc_html_e( 'Players', 'ettrick-escape-room-booking' ); ?></div>
         </div>
         <div class="erb-stat-box">
             <div class="erb-stat-box__label" style="margin-bottom:.25rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;opacity:.7;"><?php echo esc_html( $label ); ?></div>
             <div class="erb-stat-box__value"><?php echo esc_html( ERB_Helpers::format_price( (int) $period_avg ) ); ?></div>
-            <div class="erb-stat-box__label"><?php esc_html_e( 'Avg Booking', 'escape-room-booking' ); ?></div>
+            <div class="erb-stat-box__label"><?php esc_html_e( 'Avg Booking', 'ettrick-escape-room-booking' ); ?></div>
         </div>
     </div>
 
@@ -184,17 +184,17 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
     <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
         <div class="erb-card" style="flex:1;min-width:160px;text-align:center;padding:1rem;">
             <div style="font-size:1.5rem;font-weight:700;color:var(--erb-navy);"><?php echo (int) $total_bookings; ?></div>
-            <div style="font-size:.8rem;color:#6b7280;margin-top:.25rem;"><?php esc_html_e( 'All Time Bookings', 'escape-room-booking' ); ?></div>
+            <div style="font-size:.8rem;color:#6b7280;margin-top:.25rem;"><?php esc_html_e( 'All Time Bookings', 'ettrick-escape-room-booking' ); ?></div>
         </div>
         <div class="erb-card" style="flex:1;min-width:160px;text-align:center;padding:1rem;">
             <div style="font-size:1.5rem;font-weight:700;color:var(--erb-navy);"><?php echo esc_html( ERB_Helpers::format_price( (int) $total_revenue ) ); ?></div>
-            <div style="font-size:.8rem;color:#6b7280;margin-top:.25rem;"><?php esc_html_e( 'All Time Revenue', 'escape-room-booking' ); ?></div>
+            <div style="font-size:.8rem;color:#6b7280;margin-top:.25rem;"><?php esc_html_e( 'All Time Revenue', 'ettrick-escape-room-booking' ); ?></div>
         </div>
     </div>
 
     <!-- 12-month revenue chart — SVG based, no CSS dependency -->
     <div class="erb-card" style="margin-bottom:1rem;">
-        <h2 style="margin-bottom:1.25rem;"><?php esc_html_e( 'Revenue — Last 12 Months', 'escape-room-booking' ); ?></h2>
+        <h2 style="margin-bottom:1.25rem;"><?php esc_html_e( 'Revenue — Last 12 Months', 'ettrick-escape-room-booking' ); ?></h2>
         <?php
         $svg_w      = 600;
         $svg_h      = 230;
@@ -250,24 +250,24 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
         </svg>
         <div style="font-size:.75rem;color:#6b7280;margin-top:.25rem;">
             <span style="display:inline-block;width:10px;height:10px;background:#e8621a;border-radius:2px;margin-right:4px;vertical-align:middle;"></span>
-            <?php esc_html_e( 'Current month', 'escape-room-booking' ); ?>
+            <?php esc_html_e( 'Current month', 'ettrick-escape-room-booking' ); ?>
             <span style="display:inline-block;width:10px;height:10px;background:#2563eb;border-radius:2px;margin:0 4px 0 12px;opacity:.65;vertical-align:middle;"></span>
-            <?php esc_html_e( 'Previous months', 'escape-room-booking' ); ?>
+            <?php esc_html_e( 'Previous months', 'ettrick-escape-room-booking' ); ?>
         </div>
     </div>
 
     <!-- Today's bookings -->
     <?php if ( ! empty( $bookings_today ) ) : ?>
     <div class="erb-card">
-        <h2><?php esc_html_e( "Today's Bookings", 'escape-room-booking' ); ?></h2>
+        <h2><?php esc_html_e( "Today's Bookings", 'ettrick-escape-room-booking' ); ?></h2>
         <table class="erb-table">
             <thead><tr>
-                <th><?php esc_html_e( 'Ref', 'escape-room-booking' ); ?></th>
-                <th><?php esc_html_e( 'Game', 'escape-room-booking' ); ?></th>
-                <th><?php esc_html_e( 'Time', 'escape-room-booking' ); ?></th>
-                <th><?php esc_html_e( 'Customer', 'escape-room-booking' ); ?></th>
-                <th><?php esc_html_e( 'Players', 'escape-room-booking' ); ?></th>
-                <th><?php esc_html_e( 'Total', 'escape-room-booking' ); ?></th>
+                <th><?php esc_html_e( 'Ref', 'ettrick-escape-room-booking' ); ?></th>
+                <th><?php esc_html_e( 'Game', 'ettrick-escape-room-booking' ); ?></th>
+                <th><?php esc_html_e( 'Time', 'ettrick-escape-room-booking' ); ?></th>
+                <th><?php esc_html_e( 'Customer', 'ettrick-escape-room-booking' ); ?></th>
+                <th><?php esc_html_e( 'Players', 'ettrick-escape-room-booking' ); ?></th>
+                <th><?php esc_html_e( 'Total', 'ettrick-escape-room-booking' ); ?></th>
             </tr></thead>
             <tbody>
             <?php foreach ( $bookings_today as $b ) : ?>
@@ -286,7 +286,7 @@ $chart_max         = max( array_merge( $chart_values, [1] ) );
     <?php else : ?>
     <div class="erb-card">
         <p style="color:#6b7280;font-size:.9rem;margin:0;">
-            <?php esc_html_e( 'No bookings today.', 'escape-room-booking' ); ?>
+            <?php esc_html_e( 'No bookings today.', 'ettrick-escape-room-booking' ); ?>
         </p>
     </div>
     <?php endif; ?>

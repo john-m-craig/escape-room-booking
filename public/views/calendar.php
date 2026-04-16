@@ -6,7 +6,7 @@ $slug = sanitize_title( $atts['game'] ?? '' );
 $game = $slug ? ERB_DB::get_game_by_slug( $slug ) : null;
 
 if ( ! $game ) {
-    echo '<p class="erb-error">' . esc_html__( 'Game not found. Please check the shortcode slug.', 'escape-room-booking' ) . '</p>';
+    echo '<p class="erb-error">' . esc_html__( 'Game not found. Please check the shortcode slug.', 'ettrick-escape-room-booking' ) . '</p>';
     return;
 }
 
@@ -18,7 +18,7 @@ if ( $week_offset !== 0 ) {
 }
 $week_end = ( clone $week_start )->modify( '+6 days' );
 
-$base_url  = strtok( ( is_ssl() ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], '?' );
+$base_url  = strtok( ( is_ssl() ? 'https' : 'http' ) . '://' . sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) . sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '?' );
 $prev_url  = add_query_arg( 'erb_week', $week_offset - 1, $base_url );
 $next_url  = add_query_arg( 'erb_week', $week_offset + 1, $base_url );
 $today_url = $base_url;
@@ -45,30 +45,30 @@ $booking_page    = get_option( 'erb_booking_page_url', '' );
     <!-- Week navigation -->
     <div class="erb-calendar__nav">
         <a href="<?php echo esc_url( $prev_url ); ?>" class="erb-btn erb-btn--outline erb-btn--auto erb-btn--sm">
-            &#8592; <?php esc_html_e( 'Prev Week', 'escape-room-booking' ); ?>
+            &#8592; <?php esc_html_e( 'Prev Week', 'ettrick-escape-room-booking' ); ?>
         </a>
         <span class="erb-calendar__nav-title">
             <?php echo esc_html( date_i18n( get_option( 'erb_date_format', 'j F Y' ), $week_start->getTimestamp() ) . ' – ' . date_i18n( get_option( 'erb_date_format', 'j F Y' ), $week_end->getTimestamp() ) ); ?>
             <?php if ( $week_offset !== 0 ) : ?>
-                &nbsp;<a href="<?php echo esc_url( $today_url ); ?>" class="erb-today-link"><?php esc_html_e( 'This week', 'escape-room-booking' ); ?></a>
+                &nbsp;<a href="<?php echo esc_url( $today_url ); ?>" class="erb-today-link"><?php esc_html_e( 'This week', 'ettrick-escape-room-booking' ); ?></a>
             <?php endif; ?>
         </span>
         <a href="<?php echo esc_url( $next_url ); ?>" class="erb-btn erb-btn--outline erb-btn--auto erb-btn--sm">
-            <?php esc_html_e( 'Next Week', 'escape-room-booking' ); ?> &#8594;
+            <?php esc_html_e( 'Next Week', 'ettrick-escape-room-booking' ); ?> &#8594;
         </a>
     </div>
 
     <!-- Legend -->
     <div class="erb-calendar__legend">
-        <span class="erb-legend-item"><span class="erb-legend-dot" style="background:<?php echo esc_attr( $available_color ); ?>;"></span><?php esc_html_e( 'Available — click to book', 'escape-room-booking' ); ?></span>
-        <span class="erb-legend-item"><span class="erb-legend-dot" style="background:<?php echo esc_attr( $booked_color ); ?>;"></span><?php esc_html_e( 'Unavailable', 'escape-room-booking' ); ?></span>
-        <span class="erb-legend-item"><span class="erb-legend-dot" style="background:#e5e7eb;border:1px solid #d1d5db;"></span><?php esc_html_e( 'Closed', 'escape-room-booking' ); ?></span>
+        <span class="erb-legend-item"><span class="erb-legend-dot" style="background:<?php echo esc_attr( $available_color ); ?>;"></span><?php esc_html_e( 'Available — click to book', 'ettrick-escape-room-booking' ); ?></span>
+        <span class="erb-legend-item"><span class="erb-legend-dot" style="background:<?php echo esc_attr( $booked_color ); ?>;"></span><?php esc_html_e( 'Unavailable', 'ettrick-escape-room-booking' ); ?></span>
+        <span class="erb-legend-item"><span class="erb-legend-dot" style="background:#e5e7eb;border:1px solid #d1d5db;"></span><?php esc_html_e( 'Closed', 'ettrick-escape-room-booking' ); ?></span>
     </div>
 
     <!-- Loading state -->
     <div class="erb-calendar__loading" id="erb-loading-<?php echo (int) $game->id; ?>">
         <div class="erb-spinner-dark"></div>
-        <span><?php esc_html_e( 'Loading availability…', 'escape-room-booking' ); ?></span>
+        <span><?php esc_html_e( 'Loading availability…', 'ettrick-escape-room-booking' ); ?></span>
     </div>
 
     <!-- Grid populated by JS -->

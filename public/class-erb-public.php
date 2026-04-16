@@ -340,7 +340,7 @@ class ERB_Public {
     public function handle_stripe_webhook() {
         // Read raw body — must happen before any output
         $payload   = file_get_contents( 'php://input' );
-        $signature = $_SERVER['HTTP_STRIPE_SIGNATURE'] ?? '';
+        $signature = sanitize_text_field( wp_unslash( $_SERVER['HTTP_STRIPE_SIGNATURE'] ?? '' ) );
 
         $stripe = new ERB_Stripe();
         $event  = $stripe->handle_webhook( $payload, $signature );
