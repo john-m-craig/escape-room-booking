@@ -23,8 +23,6 @@ class ViewSyntaxTest extends TestCase {
     }
 
     // ── Orphaned PHP tags ─────────────────────────────────────────────────────
-    // Detects the pattern: a line that is ONLY "<?php" with nothing after it
-    // followed by a line of raw HTML — this causes a critical error.
 
     /**
      * @dataProvider viewFileProvider
@@ -36,13 +34,10 @@ class ViewSyntaxTest extends TestCase {
 
         foreach ( $lines as $i => $line ) {
             $trimmed = trim( $line );
-            // A line that is ONLY an opening PHP tag with nothing after it
             if ( $trimmed === '<?php' || $trimmed === '<?php ' ) {
-                // Check if the next non-empty line is raw HTML (not PHP)
                 for ( $j = $i + 1; $j < count( $lines ); $j++ ) {
                     $next = trim( $lines[ $j ] );
                     if ( $next === '' ) continue;
-                    // If the next line starts with < but not <?php it's raw HTML after an open tag
                     if ( str_starts_with( $next, '<' ) && ! str_starts_with( $next, '<?php' ) && ! str_starts_with( $next, '<!--' ) ) {
                         $orphans[] = "Line " . ( $i + 1 ) . ": orphaned '<?php' followed by HTML on line " . ( $j + 1 );
                     }
@@ -61,21 +56,22 @@ class ViewSyntaxTest extends TestCase {
         return array_map( fn( $f ) => [ $f ], $this->get_view_files() );
     }
 
-    // ── Paginated views have required components ──────────────────────────────
+    // ── Bookings and customers views have basic query structure ───────────────
+    // Note: Lite plugin uses simple LIMIT queries rather than ERB_Pagination.
+    // These tests verify the views have correct query structure for Lite.
 
-    public function test_bookings_view_has_pagination_setup() {
+    public function test_bookings_view_has_query_structure() {
         $source = file_get_contents( ERB_PLUGIN_DIR . 'admin/views/bookings.php' );
-        $this->assertStringContainsString( 'ERB_Pagination',  $source, 'Bookings view must instantiate ERB_Pagination' );
-        $this->assertStringContainsString( 'count_bookings',  $source, 'Bookings view must call ERB_DB::count_bookings()' );
-        $this->assertStringContainsString( 'pager->render()', $source, 'Bookings view must call $pager->render()' );
-        $this->assertStringContainsString( 'query_args()',    $source, 'Bookings view must use $pager->query_args()' );
+        $this->assertStringContainsString( 'ERB_DB::get_bookings', $source, 'Bookings view must call ERB_DB::get_bookings()' );
+        $this->assertStringContainsString( 'erb-table',            $source, 'Bookings view must render the bookings table' );
+        $this->assertStringContainsString( 'wp_add_inline_script', $source, 'Bookings view must use wp_add_inline_script for JS' );
     }
 
-    public function test_customers_view_has_pagination_setup() {
+    public function test_customers_view_has_query_structure() {
         $source = file_get_contents( ERB_PLUGIN_DIR . 'admin/views/customers.php' );
-        $this->assertStringContainsString( 'ERB_Pagination',  $source, 'Customers view must instantiate ERB_Pagination' );
-        $this->assertStringContainsString( 'pager->render()', $source, 'Customers view must call $pager->render()' );
-        $this->assertStringContainsString( 'get_offset()',    $source, 'Customers view must use $pager->get_offset()' );
+        $this->assertStringContainsString( 'erb_customers',  $source, 'Customers view must query erb_customers table' );
+        $this->assertStringContainsString( 'erb-table',      $source, 'Customers view must render the customers table' );
+        $this->assertStringContainsString( 'booking_count',  $source, 'Customers view must show booking count' );
     }
 
     // ── No raw $sql variables in views ────────────────────────────────────────
@@ -93,6 +89,25 @@ class ViewSyntaxTest extends TestCase {
                     "View file {$file} line " . ( $i + 1 ) . " contains a raw \$sql variable"
                 );
             }
+        }
+    }
+
+    // ── Inline scripts use wp_add_inline_script ───────────────────────────────
+
+    public function test_no_bare_script_tags_in_views() {
+        // booking.php and bookings.php previously had bare <script> tags.
+        // They must now use wp_add_inline_script instead.
+        $files_with_js = [
+            'admin/views/bookings.php',
+            'public/views/booking.php',
+        ];
+        foreach ( $files_with_js as $file ) {
+            $source = file_get_contents( ERB_PLUGIN_DIR . $file );
+            $this->assertStringNotContainsString(
+                '<script>',
+                $source,
+                "View file {$file} must not contain bare <script> tags — use wp_add_inline_script()"
+            );
         }
     }
 }
