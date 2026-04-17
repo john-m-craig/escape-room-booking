@@ -146,6 +146,7 @@
             </div>
         </div>
 
+        <?php if ( ! defined( 'ERB_LITE' ) ) : ?>
         <div class="erb-card">
             <h2><?php esc_html_e( 'Licence Server', 'ettrick-escape-room-booking' ); ?></h2>
             <p class="description"><?php esc_html_e( 'Set the API Secret to match the value in your licence server config.php. This ensures responses from your licence server are genuine.', 'ettrick-escape-room-booking' ); ?></p>
@@ -157,6 +158,7 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
         <?php submit_button( __( 'Save Settings', 'ettrick-escape-room-booking' ) ); ?>
     </form>
