@@ -164,21 +164,5 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 </div>
 
 <?php
-// Embed game prices for JS
-$all_games  = ERB_DB::get_games();
-$games_data = array();
-foreach ( $all_games as $g ) {
-    $prices_raw = ERB_DB::get_prices( $g->id );
-    $prices     = array();
-    foreach ( $prices_raw as $p ) {
-        $prices[ (int) $p->player_count ] = (int) $p->price_pence;
-    }
-    $games_data[ (int) $g->id ] = array(
-        'id'     => (int) $g->id,
-        'name'   => $g->name,
-        'slug'   => $g->slug,
-        'prices' => empty( $prices ) ? new stdClass() : (object) $prices,
-    );
-}
+// Game prices are passed to JS via erbPublic.gamesData in class-erb-public.php enqueue_assets()
 ?>
-<?php wp_add_inline_script( 'erb-public', 'window.erbGamesData = ' . wp_json_encode( $games_data ) . ';' ); ?>

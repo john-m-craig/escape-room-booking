@@ -1,4 +1,4 @@
-/* global ERB, erbPublic, erbGamesData, Stripe, jQuery */
+/* global ERB, erbPublic, Stripe, jQuery */
 (function ($) {
     'use strict';
 
@@ -6,7 +6,7 @@
 
         // ── State ─────────────────────────────────────────────────────────────
         state:        null,   // from sessionStorage
-        gameData:     null,   // from erbGamesData
+        gameData:     null,   // from erbPublic.gamesData
         selectedPlayers: 0,
         pricePence:   0,
         discountPct:  0,
@@ -31,7 +31,7 @@
             }
 
             ERB.Booking.state    = state;
-            ERB.Booking.gameData = (window.erbGamesData && erbGamesData[parseInt(state.gameId, 10)]) || null;
+            ERB.Booking.gameData = (erbPublic.gamesData && erbPublic.gamesData[parseInt(state.gameId, 10)]) || null;
 
             // Resume existing hold or place a new one
             var holdExpires = state.holdExpires ? new Date(state.holdExpires) : null;

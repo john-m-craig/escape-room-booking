@@ -18,6 +18,23 @@ class ERB_Public {
             wp_enqueue_script( 'stripe-js', 'https://js.stripe.com/v3/', array(), null, true );
         }
 
+        // Build games data for the booking JS
+        $all_games  = ERB_DB::get_games();
+        $games_data = array();
+        foreach ( $all_games as $g ) {
+            $prices_raw = ERB_DB::get_prices( $g->id );
+            $prices     = array();
+            foreach ( $prices_raw as $p ) {
+                $prices[ (int) $p->player_count ] = (int) $p->price_pence;
+            }
+            $games_data[ (int) $g->id ] = array(
+                'id'     => (int) $g->id,
+                'name'   => $g->name,
+                'slug'   => $g->slug,
+                'prices' => empty( $prices ) ? new stdClass() : (object) $prices,
+            );
+        }
+
         wp_localize_script( 'erb-public', 'erbPublic', array(
             'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
             'nonce'          => wp_create_nonce( 'erb_public_nonce' ),
@@ -27,6 +44,7 @@ class ERB_Public {
             'currencySymbol' => get_option( 'erb_currency_symbol', '£' ),
             'bookingPageUrl' => get_option( 'erb_booking_page_url', '' ),
             'dateFormat'     => get_option( 'erb_date_format', 'j F Y' ),
+            'gamesData'      => $games_data,
         ) );
     }
 
