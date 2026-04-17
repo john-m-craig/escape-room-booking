@@ -114,11 +114,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         <h2><?php esc_html_e( 'Payment', 'ettrick-escape-room-booking' ); ?></h2>
         <div class="erb-summary" id="erb-step3-summary"></div>
 
+        <?php if ( ! defined( 'ERB_LITE' ) ) : ?>
         <div class="erb-promo-row">
             <input type="text" id="erb-promo-code" placeholder="<?php esc_attr_e( 'Promo code', 'ettrick-escape-room-booking' ); ?>" style="text-transform:uppercase;">
             <button class="erb-btn erb-btn--outline erb-btn--auto" onclick="ERB.Booking.applyPromo()"><?php esc_html_e( 'Apply', 'ettrick-escape-room-booking' ); ?></button>
         </div>
         <div id="erb-promo-result" style="margin-bottom:.75rem;font-size:14px;"></div>
+        <?php endif; ?>
 
         <div class="erb-price-box" id="erb-payment-price-box">
             <div>
