@@ -117,15 +117,38 @@ The free version contains links to https://escaperoombookingpro.com for upgrade 
 
 == Screenshots ==
 
-1. The weekly availability calendar showing available and booked slots
-2. Step 1 of the booking flow — player selection with live price updates
-3. Step 2 — Stripe payment form
-4. Booking confirmed screen
-5. Customer manage-booking page
-6. Admin bookings screen
-7. Admin games setup screen
+1. The WordPress admin menu showing all Escape Rooms sections
+2. Games and Rooms setup screen — add unlimited games with pricing and hours
+3. The weekly availability calendar — green slots available, red slots booked
+4. Step 1 of the booking flow — player selection with live price updates
+5. Step 2 — customer details form
+6. Step 3 — Stripe payment form with booking summary
+7. Booking confirmed screen — customer sees reference and booking details
+8. Admin bookings screen — view, filter and manage all bookings
+9. Admin customers screen — full customer history and spending
+10. Dashboard summary — today's stats at a glance
+11. Dashboard revenue chart — last 12 months revenue
+12. Dashboard today's bookings — upcoming slots for the day
+13. Upgrade to Pro screen — compare free and Pro features
+14. Settings screen — configure Stripe keys, email settings, page URLs and iCal feeds
 
 == Changelog ==
+
+= 1.3.0 =
+* Renamed all internal prefixes from erb_ to eerb_ for WordPress.org compliance
+* Added automatic database migration on upgrade
+* Updated tested up to WordPress 7.0
+* Fixed Plugin URI, text domain, capability checks and sanitization
+
+= 1.2.0 =
+* Fixed Plugin URI
+* Fixed text domain mismatch (8 instances)
+* Added capability checks to all admin AJAX handlers
+* Sanitized pagination variables
+
+= 1.1.9 =
+* Updated tested up to WordPress 7.0
+* Escaped table name variables in customers view
 
 = 1.1.8 =
 * Updated tested up to WordPress 6.9
