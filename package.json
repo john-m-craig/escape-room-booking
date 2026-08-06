@@ -1,0 +1,26 @@
+{
+  "name": "escape-room-booking",
+  "version": "1.0.0",
+  "description": "![Tests](https://github.com/john-m-craig/escape-room-booking/actions/workflows/tests.yml/badge.svg)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ettrick-intelligence/escape-room-booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ettrick-intelligence/escape-room-booking/issues"
+  },
+  "homepage": "https://github.com/ettrick-intelligence/escape-room-booking#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2"
+  }
+}
