@@ -143,7 +143,7 @@ test.describe('Admin — 2 Game Limit', () => {
     // Skipped: 20i hosting blocks automated login attempts
     // To enable: set up local WordPress environment or find solution to bot protection
 
-    test.skip('Add Game button is greyed out after 2 games', async ({ page }) => {
+    test('Add Game button is greyed out after 2 games', async ({ page }) => {
 
         // Log into WordPress admin
         await page.goto(process.env.WP_ADMIN_URL);
@@ -166,7 +166,7 @@ test.describe('Admin — 2 Game Limit', () => {
         console.log('✅ Add Game button correctly disabled at 2-game limit');
     });
 
-    test.skip('Upgrade to Pro screen is shown', async ({ page }) => {
+    test('Upgrade to Pro screen is shown', async ({ page }) => {
 
         // Log into WordPress admin
         await page.goto(process.env.WP_ADMIN_URL);
