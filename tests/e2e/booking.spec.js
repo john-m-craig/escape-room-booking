@@ -137,3 +137,53 @@ test.describe('Full Booking Flow', () => {
     });
 
 });
+
+test.describe('Admin — 2 Game Limit', () => {
+
+    // Skipped: 20i hosting blocks automated login attempts
+    // To enable: set up local WordPress environment or find solution to bot protection
+
+    test.skip('Add Game button is greyed out after 2 games', async ({ page }) => {
+
+        // Log into WordPress admin
+        await page.goto(process.env.WP_ADMIN_URL);
+        await page.locator('#user_login').fill(process.env.WP_ADMIN_USER);
+        await page.locator('#user_pass').fill(process.env.WP_ADMIN_PASS);
+        await page.locator('#wp-submit').click();
+
+        // Navigate to Games page
+        await page.goto(process.env.WP_ADMIN_URL + 'admin.php?page=eerb-games');
+        await expect(page).toHaveURL(/eerb-games/, { timeout: 10000 });
+
+        // Find the Add Game button — should be disabled at 2-game limit
+        const addGameBtn = page.locator('button').filter({ hasText: /Add Game/i }).first();
+        await expect(addGameBtn).toBeVisible({ timeout: 10000 });
+
+        const isDisabled  = await addGameBtn.isDisabled();
+        const hasAtLimit  = await addGameBtn.getAttribute('data-at-limit');
+        expect(isDisabled || hasAtLimit === '1').toBeTruthy();
+
+        console.log('✅ Add Game button correctly disabled at 2-game limit');
+    });
+
+    test.skip('Upgrade to Pro screen is shown', async ({ page }) => {
+
+        // Log into WordPress admin
+        await page.goto(process.env.WP_ADMIN_URL);
+        await page.locator('#user_login').fill(process.env.WP_ADMIN_USER);
+        await page.locator('#user_pass').fill(process.env.WP_ADMIN_PASS);
+        await page.locator('#wp-submit').click();
+
+        // Navigate to Upgrade page
+        await page.goto(process.env.WP_ADMIN_URL + 'admin.php?page=eerb-upgrade');
+        await expect(page).toHaveURL(/eerb-upgrade/, { timeout: 10000 });
+
+        // Upgrade page should show link to Pro
+        await expect(page.locator('.wrap')).toBeVisible({ timeout: 10000 });
+        const proLink = page.locator('a[href*="escaperoombookingpro.com"]').first();
+        await expect(proLink).toBeVisible({ timeout: 5000 });
+
+        console.log('✅ Upgrade to Pro screen shown correctly');
+    });
+
+});
